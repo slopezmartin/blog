@@ -4,6 +4,7 @@ import com.softwaresapiens.blog.domain.PostStatus;
 import com.softwaresapiens.blog.domain.entities.Category;
 import com.softwaresapiens.blog.domain.entities.Post;
 import com.softwaresapiens.blog.domain.entities.Tag;
+import com.softwaresapiens.blog.domain.entities.User;
 import com.softwaresapiens.blog.repositories.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,9 @@ public class PostService {
         return postRepository.findAllByStatus(
                 PostStatus.PUBLISHED);
 
+    }
+
+    public List<Post> getDraftPost(User user){
+            return postRepository.findAllByAuthorAndStatus(user, PostStatus.DRAFT);
     }
 }
