@@ -2,6 +2,7 @@ package com.softwaresapiens.blog.services;
 
 import com.softwaresapiens.blog.domain.entities.Category;
 import com.softwaresapiens.blog.repositories.CategoryRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    @Transactional
     public void deleteCategory(UUID id){
         Optional<Category> category = categoryRepository.findById(id);
         if(category.isPresent()){
@@ -36,5 +38,10 @@ public class CategoryService {
             }
         }
         categoryRepository.deleteById(id);
+    }
+
+    public Category getCategoryById(UUID id){
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Category not found with id: " + id));
     }
 }
