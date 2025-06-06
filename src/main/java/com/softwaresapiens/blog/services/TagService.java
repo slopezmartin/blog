@@ -58,5 +58,14 @@ public class TagService {
         return tagRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tag not found with id: " + id));
     }
+
+    public List<Tag> getTagsById(Set<UUID> tagIds) {
+
+        List<Tag> foundTags = tagRepository.findAllById(tagIds);
+        if(foundTags.size() != tagIds.size()) {
+            throw new EntityNotFoundException("Not all specified tags IDS exist");
+        }
+        return foundTags;
+    }
 }
 
